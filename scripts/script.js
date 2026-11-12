@@ -1,7 +1,3 @@
-let firstNumber = null;
-let operator = null;
-let secondNum = null;
-
 function add (firstNum, secondNum) {
   return firstNum + secondNum;
 }
@@ -19,28 +15,26 @@ function divide (firstNum, secondNum) {
 }
 
 function operate (opr, firstNum, secondNum) {
-  Number(firstNum);
-  Number(secondNum);
-
   switch (opr) {
     case '+':
       return add(firstNum, secondNum);
-      break;
     case '-':
       return subtract(firstNum, secondNum);
-      break;
     case '*':
       return multiply(firstNum, secondNum);
-      break;
     case '/':
       return divide(firstNum, secondNum);
-      break;
   }
 }
 
+
 const screen = document.querySelector(".screen");
 const digitButtons = document.querySelectorAll(".digit");
+const operatorButtons = document.querySelectorAll(".operator");
 
+let firstNumber = null;
+let operator = null;
+let secondNumber = null;
 let currentInput = "0";
 
 function appendNumber (digit) {
@@ -56,8 +50,23 @@ function appendNumber (digit) {
     firstNumber = Number(currentInput);
     console.log(firstNumber);
   } else {
-    secondNum = Number(currentInput);
+    secondNumber = Number(currentInput);
   }
+}
+
+function handleOperator (newOperator) {
+  if (operator !== null && 
+      firstNumber !== null && 
+      secondNumber !== null) {
+    firstNumber = operate(operator, firstNumber, secondNumber);
+    screen.textContent = firstNumber;
+    secondNumber = null;
+  } else if (firstNumber === null) {
+    firstNumber = Number(currentInput);
+  }
+
+  operator = newOperator;
+  currentInput = "0";
 }
 
 digitButtons.forEach((button) => {
@@ -65,3 +74,9 @@ digitButtons.forEach((button) => {
     appendNumber(button.textContent);
   });
 });
+
+operatorButtons.forEach((button) => {
+  button.addEventListener("click", (event) => {
+    handleOperator(button.textContent);
+  })
+})
