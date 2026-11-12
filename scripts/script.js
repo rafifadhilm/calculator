@@ -55,8 +55,14 @@ let firstNumber = null;
 let operator = null;
 let secondNumber = null;
 let currentInput = "0";
+let shouldResetScreen = false;
 
 function appendNumber (digit) {
+  if (shouldResetScreen) {
+    currentInput = "0";
+    shouldResetScreen = false;
+  }
+
   if (currentInput.length >= 16) {
     return;
   }
@@ -93,6 +99,10 @@ function appendDecimal () {
 }
 
 function handleOperator (newOperator) {
+  if (shouldResetScreen) {
+    shouldResetScreen = false;
+  }
+
   if (operator !== null && 
       firstNumber !== null && 
       secondNumber !== null) {
@@ -120,6 +130,7 @@ function calculate () {
   operator = null;
   secondNumber = null;
   currentInput = result.toString();
+  shouldResetScreen = true;
 }
 
 function clearCalculator () {
