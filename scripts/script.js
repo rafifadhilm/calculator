@@ -12,7 +12,7 @@ function multiply (firstNum, secondNum) {
 
 function divide (firstNum, secondNum) {
   if (secondNum === 0) {
-    return "Error, cannot divide by zero";
+    return "Error";
   }
 
   let result = firstNum / secondNum;
@@ -34,6 +34,10 @@ function operate (opr, firstNum, secondNum) {
     case '/':
       result = divide(firstNum, secondNum);
       break;
+  }
+
+  if (typeof result === "string") {
+    return result;
   }
 
   if (Math.abs(result - Math.round(result)) < 0.00001) {
@@ -123,6 +127,16 @@ function calculate () {
   }
 
   let result = operate(operator, firstNumber, secondNumber);
+
+  if (typeof result === "string") {
+    screen.textContent = result;
+    firstNumber = null;
+    operator = null;
+    secondNumber = null;
+    currentInput = "0";
+    shouldResetScreen = true;
+    return;
+  }
 
   screen.textContent = result;
 
