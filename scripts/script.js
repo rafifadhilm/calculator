@@ -187,3 +187,36 @@ equalsButton.addEventListener("click", calculate);
 decimalButton.addEventListener("click", appendDecimal);
 clearButton.addEventListener("click", clearCalculator);
 deleteButton.addEventListener("click", deleteDigit);
+
+window.addEventListener("keydown", (event) => {
+  if (event.key >= "0" && event.key <= "9") {
+    appendNumber(event.key);
+  }
+  
+  if (event.key === ".") {
+    appendDecimal();
+  }
+  
+  if (event.key === "+" || event.key === "-") {
+    handleOperator(event.key);
+  }
+  if (event.key === "*") {
+    handleOperator("*");
+  }
+  if (event.key === "/") {
+    event.preventDefault(); 
+    handleOperator("/");
+  }
+  
+  if (event.key === "Enter" || event.key === "=") {
+    calculate();
+  }
+  
+  if (event.key === "Backspace") {
+    deleteDigit();
+  }
+
+  if (event.key === "Escape") {
+    clearCalculator();
+  }
+});
