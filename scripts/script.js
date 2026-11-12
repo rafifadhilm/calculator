@@ -27,10 +27,10 @@ function operate (opr, firstNum, secondNum) {
   }
 }
 
-
 const screen = document.querySelector(".screen");
 const digitButtons = document.querySelectorAll(".digit");
 const operatorButtons = document.querySelectorAll(".operator");
+const equalsButton = document.querySelector(".equal");
 
 let firstNumber = null;
 let operator = null;
@@ -69,6 +69,21 @@ function handleOperator (newOperator) {
   currentInput = "0";
 }
 
+function calculate () {
+  if (operator === null || firstNumber === null || secondNumber === null) {
+    return;
+  }
+
+  let result = operate(operator, firstNumber, secondNumber);
+
+  screen.textContent = result;
+
+  firstNumber = result;
+  operator = null;
+  secondNumber = null;
+  currentInput = result.toString();
+}
+
 digitButtons.forEach((button) => {
   button.addEventListener("click", (event) => {
     appendNumber(button.textContent);
@@ -80,3 +95,5 @@ operatorButtons.forEach((button) => {
     handleOperator(button.textContent);
   })
 })
+
+equalsButton.addEventListener("click", calculate);
