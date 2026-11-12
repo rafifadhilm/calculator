@@ -35,7 +35,7 @@ function operate (opr, firstNum, secondNum) {
       result = divide(firstNum, secondNum);
       break;
   }
-  
+
   if (Math.abs(result - Math.round(result)) < 0.00001) {
     return Math.round(result);
   }
@@ -47,7 +47,9 @@ const screen = document.querySelector(".screen");
 const digitButtons = document.querySelectorAll(".digit");
 const operatorButtons = document.querySelectorAll(".operator");
 const equalsButton = document.querySelector(".equal");
-const decimalButton = document.querySelector(".decimal")
+const decimalButton = document.querySelector(".decimal");
+const clearButton = document.querySelector(".clear");
+const deleteButton = document.querySelector(".delete");
 
 let firstNumber = null;
 let operator = null;
@@ -120,6 +122,30 @@ function calculate () {
   currentInput = result.toString();
 }
 
+function clearCalculator () {
+  operator = null;
+  firstNumber = null;
+  secondNumber = null;
+  currentInput = "0";
+  screen.textContent = currentInput;
+}
+
+function deleteDigit () {
+  if (currentInput.length === 1 || currentInput.includes("Error")) {
+    currentInput = "0";
+  } else {
+    currentInput = currentInput.slice(0, -1);
+  }
+
+  screen.textContent = currentInput;
+
+  if (operator === null) {
+    firstNumber = Number(currentInput);
+  } else {
+    secondNumber = Number(currentInput);
+  }
+}
+
 digitButtons.forEach((button) => {
   button.addEventListener("click", (event) => {
     appendNumber(button.textContent);
@@ -134,3 +160,5 @@ operatorButtons.forEach((button) => {
 
 equalsButton.addEventListener("click", calculate);
 decimalButton.addEventListener("click", appendDecimal);
+clearButton.addEventListener("click", clearCalculator);
+deleteButton.addEventListener("click", deleteDigit);
