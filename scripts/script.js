@@ -37,3 +37,31 @@ function operate (opr, firstNum, secondNum) {
       break;
   }
 }
+
+const screen = document.querySelector(".screen");
+const digitButtons = document.querySelectorAll(".digit");
+
+let currentInput = "0";
+
+function appendNumber (digit) {
+  if (currentInput === "0") {
+    currentInput = digit;
+  } else {
+    currentInput += digit;
+  }
+
+  screen.textContent = currentInput;
+
+  if (operator === null) {
+    firstNumber = Number(currentInput);
+    console.log(firstNumber);
+  } else {
+    secondNum = Number(currentInput);
+  }
+}
+
+digitButtons.forEach((button) => {
+  button.addEventListener("click", (event) => {
+    appendNumber(button.textContent);
+  });
+});
